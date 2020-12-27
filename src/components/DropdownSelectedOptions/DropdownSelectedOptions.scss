@@ -24,6 +24,12 @@
     outline: none;
   &:focus{
     box-shadow:  0 0 5px #007bff ;
+    animation: shacking .2s infinite;
   }
   }
+}
+@keyframes shacking{
+  from{transform:rotate(-2deg)}
+  50%{transform:rotate(0deg)}
+  to{transform:rotate(-2deg)}
 }
