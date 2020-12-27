@@ -1,0 +1,29 @@
+.selected-options{
+  display: grid;
+  grid-auto-flow: column;
+  width: 200px;
+  gap: 10px;
+  &__item{
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: .2s;
+    cursor:pointer;
+    &:hover{
+      box-shadow:  0 0 0px 1px #0368d4;
+      background-color: #0368d4;
+      box-sizing: border-box;
+    }
+    outline: none;
+  &:focus{
+    box-shadow:  0 0 5px #007bff ;
+  }
+  }
+}

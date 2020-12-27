@@ -1,0 +1,11 @@
+.dropdown-options{
+  margin-top: 10px;
+  border-radius: 5px;
+  width: 100%;
+  display: grid;
+  position: absolute;
+  background-color: #eaeaee;
+  &__item{
+    cursor: pointer;
+  }
+}

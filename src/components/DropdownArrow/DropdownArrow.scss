@@ -1,0 +1,9 @@
+.dropdown-header__arrow{
+  width: 16px;
+  height: 16px;
+  transition: .2s;
+  fill:#292929;
+  &_open{
+    transform: rotate(180deg);
+  }
+}

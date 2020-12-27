@@ -1,0 +1,15 @@
+.dropdown-header{
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 5px;
+  height: 25px;
+  background-color: #eaeaee;// #F7F7F9
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  &:focus{
+    box-shadow:  0 0 10px #9f9fa3 ;
+  }
+}

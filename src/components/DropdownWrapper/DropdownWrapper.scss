@@ -1,0 +1,6 @@
+.dropdown-wr{
+  position: relative;
+  &_open{
+    z-index: 2;
+  }
+}
