@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
+import changeOption from '../../actions/changeOption';
 import DropdownOptionsItem from './DropdownOptionsItem';
 import './DropdownOptions.scss';
 
@@ -18,10 +19,7 @@ export default function DropdownOptions({ isOpen, dropdownOptions, onSelect, set
         {dropdownOptions.map(({ value, id, selected }) => (
           <DropdownOptionsItem
             onChange={(checked) => {
-              setDropdownOptions(dropdownOptions.map((item) => (item.id === id ? { ...item, selected: checked } : item)));
-              if (onSelect) {
-                onSelect({ type: checked ? 'ADD' : 'REMOVE', item: { value, id } });
-              }
+              changeOption({ dropdownOptions, onSelect, setDropdownOptions, checked, value, id });
             }}
             selected={selected}
             value={value}

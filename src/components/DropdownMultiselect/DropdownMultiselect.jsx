@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import getSelectedOptions from '../../actions/getSelectedOptions';
+import optionsFormat from '../../actions/optionsFormat';
 import Backdrop from '../Backdrop/Backdrop';
 import DropdownArrow from '../DropdownArrow/DropdownArrow';
 import DropdownHeader from '../DropdownHeader/DropdownHeader';
@@ -7,15 +9,7 @@ import DropdownOptions from '../DropdownOptions/DropdownOptions';
 import DropdownSelectedOptions from '../DropdownSelectedOptions/DropdownSelectedOptions';
 import DropdownWrapper from '../DropdownWrapper/DropdownWrapper';
 
-export function optionsFormat(options) {
-  return options.map((optionsItem) => (typeof optionsItem.selected !== 'boolean' ? { ...optionsItem, selected: false } : optionsItem));
-}
-
-export function getSelectedOptions(options) {
-  return options.filter((optionsItem) => optionsItem.selected);
-}
-
-export function DropdownMultiselect({ options, defaultValue, onSelect }) {
+export default function DropdownMultiselect({ options, defaultValue, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState(optionsFormat(options));
   return (

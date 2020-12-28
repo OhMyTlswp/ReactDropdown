@@ -11,10 +11,10 @@
   backdrop-filter: blur(0);
   &-enter-done{
     background: rgba(0, 0, 0,0.4);
-    backdrop-filter: blur(2px);
+    // backdrop-filter: blur(2px);
   }
   &-enter-active{
     background: rgba(0, 0, 0,0.4);
-    backdrop-filter: blur(2px);
+    // backdrop-filter: blur(2px);
   }
 }

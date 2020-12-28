@@ -17,6 +17,7 @@ body{
   margin: 20px;
 }
 #root{
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 20px;
 }

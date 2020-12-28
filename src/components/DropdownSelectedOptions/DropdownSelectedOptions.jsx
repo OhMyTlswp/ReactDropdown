@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import deselectOption from '../../actions/deselectOption';
 import './DropdownSelectedOptions.scss';
+import DropdownSelectedOptionsItem from './DropdownSelectedOptionsItem';
 
 export default function DropdownSelectedOptions({ dropdownOptions, onSelect, defaultValue, selectedOptions, setDropdownOptions }) {
-  if (!Array.isArray(selectedOptions)) {
-    return (
-      <div className="selected-options">
-        <span>{defaultValue}</span>
-      </div>
-    );
-  }
-  if (selectedOptions.length === 0) {
+  if (selectedOptions.length === 0 || !Array.isArray(selectedOptions)) {
     return (
       <div className="selected-options">
         <span>{defaultValue}</span>
@@ -19,44 +14,17 @@ export default function DropdownSelectedOptions({ dropdownOptions, onSelect, def
   }
   return (
     <div className="selected-options">
-      {selectedOptions.map(({ value, id }, index) => {
-        if (index < 2) {
-          return (
-            <div
-              key={id}
-              role="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setDropdownOptions(
-                  dropdownOptions.map((dropdownOptionsItem) =>
-                    dropdownOptionsItem.id === id ? { ...dropdownOptionsItem, selected: false } : dropdownOptionsItem,
-                  ),
-                );
-                onSelect({ type: 'REMOVE', item: { value, id } });
-              }}
-              onKeyPress={(e) => {
-                e.stopPropagation();
-                if (e.code === 'Space') {
-                  setDropdownOptions(
-                    dropdownOptions.map((dropdownOptionsItem) =>
-                      dropdownOptionsItem.id === id ? { ...dropdownOptionsItem, selected: false } : dropdownOptionsItem,
-                    ),
-                  );
-                  onSelect({ type: 'REMOVE', item: { value, id } });
-                }
-              }}
-              tabIndex={0}
-              className="selected-options__item"
-            >
-              {value}
-            </div>
-          );
-        }
-        if (index + 1 === selectedOptions.length) {
-          return `+${selectedOptions.length - 2}`;
-        }
-        return null;
-      })}
+      {selectedOptions.map(({ value, id }, index) => (
+        <DropdownSelectedOptionsItem
+          key={id}
+          onSelect={(e) => {
+            deselectOption({ e, dropdownOptions, id, value, setDropdownOptions, onSelect });
+          }}
+          length={selectedOptions.length}
+          value={value}
+          index={index}
+        />
+      ))}
     </div>
   );
 }

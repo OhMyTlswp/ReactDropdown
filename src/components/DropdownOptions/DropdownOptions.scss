@@ -10,7 +10,10 @@
   opacity: 0;
   z-index: -10;
   &__item{
-    display: flex;
+    user-select: none;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
     align-items: center;
     box-sizing: border-box;
     padding: 5px;
@@ -51,6 +54,13 @@
   outline: none;
   &:active{
     animation: shacking .2s infinite;
+  }
+  &__selected{
+    clip-path: circle(0% at 0% 0%);
+    transition: .4s;
+  }
+  &__selected_active{
+    clip-path: circle(150% at 0% 0%);
   }
 }
 .hidden{
