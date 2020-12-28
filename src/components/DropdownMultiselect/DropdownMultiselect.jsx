@@ -40,7 +40,13 @@ export function DropdownMultiselect({ options, defaultValue, onSelect }) {
           />
           <DropdownArrow isOpen={isOpen} />
         </DropdownHeader>
-        {isOpen && <DropdownOptions onSelect={onSelect} setDropdownOptions={setDropdownOptions} dropdownOptions={dropdownOptions} />}
+        <DropdownOptions
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          onSelect={onSelect}
+          setDropdownOptions={setDropdownOptions}
+          dropdownOptions={dropdownOptions}
+        />
       </DropdownWrapper>
     </Backdrop>
   );
