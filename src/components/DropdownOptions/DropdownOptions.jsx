@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CSSTransition } from 'react-transition-group';
-import changeOption from '../../actions/changeOption';
 import DropdownOptionsItem from './DropdownOptionsItem';
 import './DropdownOptions.scss';
 
-export default function DropdownOptions({ isOpen, dropdownOptions, onSelect, setDropdownOptions, setIsOpen }) {
+export default function DropdownOptions({ state, setOptionSelect, setIsOpen }) {
   return (
     <CSSTransition
-      in={isOpen}
+      in={state.isOpen}
       timeout={200}
       classNames="dropdown-options"
       unmountOnExit
@@ -16,15 +15,15 @@ export default function DropdownOptions({ isOpen, dropdownOptions, onSelect, set
       onExited={() => setIsOpen(false)}
     >
       <div className="dropdown-options">
-        {dropdownOptions.map(({ value, id, selected }) => (
+        {state.options.map((option) => (
           <DropdownOptionsItem
-            onChange={(checked) => {
-              changeOption({ dropdownOptions, onSelect, setDropdownOptions, checked, value, id });
+            onChange={(e) => {
+              setOptionSelect(e, option);
             }}
-            selected={selected}
-            value={value}
-            id={id}
-            key={id}
+            selected={option.selected}
+            value={option.value}
+            id={option.id}
+            key={option.id}
           />
         ))}
       </div>
@@ -33,9 +32,17 @@ export default function DropdownOptions({ isOpen, dropdownOptions, onSelect, set
 }
 
 DropdownOptions.propTypes = {
-  dropdownOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelect: PropTypes.func.isRequired,
-  setDropdownOptions: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
+  state: PropTypes.shape({
+    isOpen: PropTypes.bool,
+    defaultValue: PropTypes.string,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        selected: PropTypes.bool,
+      }),
+    ),
+  }).isRequired,
+  setOptionSelect: PropTypes.func.isRequired,
   setIsOpen: PropTypes.func.isRequired,
 };

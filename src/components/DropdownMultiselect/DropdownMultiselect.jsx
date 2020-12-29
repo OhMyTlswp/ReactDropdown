@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import getSelectedOptions from '../../actions/getSelectedOptions';
 import optionsFormat from '../../actions/optionsFormat';
+import setIsOpen from '../../actions/setIsOpen';
+import setOptionSelect from '../../actions/setOptionSelect';
+import reducer from '../../reducer';
 import Backdrop from '../Backdrop/Backdrop';
 import DropdownArrow from '../DropdownArrow/DropdownArrow';
 import DropdownHeader from '../DropdownHeader/DropdownHeader';
@@ -10,36 +13,37 @@ import DropdownSelectedOptions from '../DropdownSelectedOptions/DropdownSelected
 import DropdownWrapper from '../DropdownWrapper/DropdownWrapper';
 
 export default function DropdownMultiselect({ options, defaultValue, onSelect }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [dropdownOptions, setDropdownOptions] = useState(optionsFormat(options));
+  const [state, dispatch] = useReducer(reducer, { isOpen: false, options: optionsFormat(options), defaultValue });
   return (
-    <Backdrop isOpen={isOpen} setIsOpen={setIsOpen}>
-      <DropdownWrapper isOpen={isOpen}>
+    <Backdrop
+      isOpen={state.isOpen}
+      setIsOpen={(isOpen) => {
+        dispatch(setIsOpen(isOpen));
+      }}
+    >
+      <DropdownWrapper isOpen={state.isOpen}>
         <DropdownHeader
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-          onKeyPress={(e) => {
-            if (e.code === 'Space') {
-              setIsOpen(!isOpen);
-            }
+          setIsOpen={() => {
+            dispatch(setIsOpen(!state.isOpen));
           }}
         >
           <DropdownSelectedOptions
-            onSelect={onSelect}
-            defaultValue={defaultValue}
-            selectedOptions={getSelectedOptions(dropdownOptions)}
-            dropdownOptions={dropdownOptions}
-            setDropdownOptions={setDropdownOptions}
+            state={state}
+            selectedOptions={getSelectedOptions(state.options)}
+            setOptionSelect={(e, option) => {
+              dispatch(setOptionSelect(e, onSelect, option));
+            }}
           />
-          <DropdownArrow isOpen={isOpen} />
+          <DropdownArrow isOpen={state.isOpen} />
         </DropdownHeader>
         <DropdownOptions
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
-          onSelect={onSelect}
-          setDropdownOptions={setDropdownOptions}
-          dropdownOptions={dropdownOptions}
+          state={state}
+          setIsOpen={(isOpen) => {
+            dispatch(setIsOpen(isOpen));
+          }}
+          setOptionSelect={(e, option) => {
+            dispatch(setOptionSelect(e, onSelect, option));
+          }}
         />
       </DropdownWrapper>
     </Backdrop>

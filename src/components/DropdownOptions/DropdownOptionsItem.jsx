@@ -8,7 +8,7 @@ export default function DropdownOptionsItem({ value, onChange, selected }) {
         type="checkbox"
         className="hidden"
         onChange={(e) => {
-          onChange(e.target.checked);
+          onChange(e);
         }}
         checked={selected}
       />

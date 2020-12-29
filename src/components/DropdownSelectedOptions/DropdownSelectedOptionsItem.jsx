@@ -10,7 +10,6 @@ export default function DropdownSelectedOptionsItem({ index, value, onSelect, le
           onSelect(e);
         }}
         onKeyPress={(e) => {
-          e.stopPropagation();
           if (e.code === 'Space') {
             onSelect(e);
           }

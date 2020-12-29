@@ -5,7 +5,9 @@ export default function App() {
   return (
     <>
       <DropdownMultiselect
-        onSelect={() => {}}
+        onSelect={(option) => {
+          console.log(option);
+        }}
         defaultValue="Выберите"
         options={[
           { value: 'Ты', id: 0 },
@@ -16,7 +18,9 @@ export default function App() {
         ]}
       />
       <DropdownMultiselect
-        onSelect={() => {}}
+        onSelect={(option) => {
+          console.log(option);
+        }}
         options={[
           { value: 'Ты', id: 0, selected: true },
           { value: 'Не ты', id: 1 },

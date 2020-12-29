@@ -2,16 +2,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import './DropdownHeader.scss';
 
-export default function DropdownHeader({ children, onClick, onKeyPress }) {
+export default function DropdownHeader({ children, setIsOpen }) {
   return (
-    <div onClick={onClick} onKeyPress={onKeyPress} role="button" tabIndex={0} className="dropdown-header">
+    <div
+      onClick={setIsOpen}
+      onKeyPress={(e) => {
+        if (e.code === 'Space') {
+          setIsOpen();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      className="dropdown-header"
+    >
       {children}
     </div>
   );
 }
 
 DropdownHeader.propTypes = {
-  children: PropTypes.element.isRequired,
-  onClick: PropTypes.func.isRequired,
-  onKeyPress: PropTypes.func.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  setIsOpen: PropTypes.func.isRequired,
 };

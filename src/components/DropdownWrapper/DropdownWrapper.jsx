@@ -7,5 +7,5 @@ export default function DropdownWrapper({ isOpen, children }) {
 }
 DropdownWrapper.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
 };

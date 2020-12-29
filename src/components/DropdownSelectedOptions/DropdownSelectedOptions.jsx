@@ -1,27 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import deselectOption from '../../actions/deselectOption';
 import './DropdownSelectedOptions.scss';
 import DropdownSelectedOptionsItem from './DropdownSelectedOptionsItem';
 
-export default function DropdownSelectedOptions({ dropdownOptions, onSelect, defaultValue, selectedOptions, setDropdownOptions }) {
+export default function DropdownSelectedOptions({ state, setOptionSelect, selectedOptions }) {
   if (selectedOptions.length === 0 || !Array.isArray(selectedOptions)) {
     return (
       <div className="selected-options">
-        <span>{defaultValue}</span>
+        <span>{state.defaultValue}</span>
       </div>
     );
   }
   return (
     <div className="selected-options">
-      {selectedOptions.map(({ value, id }, index) => (
+      {selectedOptions.map((option, index) => (
         <DropdownSelectedOptionsItem
-          key={id}
+          key={option.id}
           onSelect={(e) => {
-            deselectOption({ e, dropdownOptions, id, value, setDropdownOptions, onSelect });
+            setOptionSelect(e, option);
           }}
           length={selectedOptions.length}
-          value={value}
+          value={option.value}
           index={index}
         />
       ))}
@@ -29,9 +28,17 @@ export default function DropdownSelectedOptions({ dropdownOptions, onSelect, def
   );
 }
 DropdownSelectedOptions.propTypes = {
-  dropdownOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSelect: PropTypes.func.isRequired,
-  setDropdownOptions: PropTypes.func.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  state: PropTypes.shape({
+    isOpen: PropTypes.bool,
+    defaultValue: PropTypes.string,
+    options: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        selected: PropTypes.bool,
+      }),
+    ),
+  }).isRequired,
+  setOptionSelect: PropTypes.func.isRequired,
   selectedOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
