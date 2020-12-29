@@ -9,6 +9,7 @@
   border-radius: 5px;
   cursor: pointer;
   outline: none;
+  transition: .2s;
   &:focus{
     box-shadow:  0 0 10px #9f9fa3 ;
   }
